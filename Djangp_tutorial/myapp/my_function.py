@@ -43,7 +43,9 @@ def my_function(s):
             filtered_sentence.append(w)
   
 
-#stemming we will not use
+
+#stemming we will not use ....
+
 
 
 # lemmatization 
