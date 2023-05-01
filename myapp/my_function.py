@@ -1,3 +1,45 @@
+
+def db(ele):
+    import pyodbc 
+    import nltk
+   
+    server = 'LAPTOP-LFH0VJ0R'  # Replace with your server name
+    database = 'vp'  # Replace with your database name
+#username = 'LAPTOP-LFH0VJ0R\Admin(52)'  # Replace with your username
+#password = 'rajathn14'  # Replace with your password
+#windows authentication so  no need
+    cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER='+server+';DATABASE='+database)
+
+    cursor = cnxn.cursor()
+    sn=ele
+    pat='%'
+    sn=pat+sn+pat
+#used placeholder
+# Execute a SELECT query to retrieve data from the database
+    query = "SELECT * FROM entries WHERE identifier like ?;"
+    params = (sn,)
+    cursor.execute(query,params)
+
+    results = cursor.fetchall()
+ 
+# Iterate over the query results and print them out
+    #ans=""
+    #for row in results:
+   
+
+        
+        
+    
+# Close the cursor and connection to release resources
+    cursor.close()
+
+    return results
+
+
+
+
+
+
 def my_function(s):
     # do something with the text here
     # cleaning
@@ -7,6 +49,7 @@ def my_function(s):
 
     s=re.sub(r'[^\w\s]','',s)
 # this code for to allow only space and words (whichever is not a word or space characater replace it with '')
+
 
 
 #tokenization 
@@ -58,8 +101,20 @@ def my_function(s):
 
     for i in range(len(filtered_sentence)):
         lemma.append(lemmatizer.lemmatize(filtered_sentence[i],'v'))
+
+    
+    for i in lemma:
+        ch=db(i)
+        if ch:
+           return ch
   
 
-    return lemma 
+    return "No such name exists"
+
+
+
+
+
+
 
 
